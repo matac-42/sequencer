@@ -5,7 +5,8 @@ public class Main {
 
         String bassDrumSet = "bassdrum.wav";//SoundSet内の音声ファイル名を入れる。
         Sequencer sequencer = new Sequencer();
-        sequencer.SoundOutput(bassDrumSet);
+        sequencer.BeatMaker(sequencer.BeatMap(), bassDrumSet);
+
 
     }
 }
