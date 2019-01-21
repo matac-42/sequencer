@@ -5,6 +5,9 @@ import java.util.Scanner;
 
 import javafx.scene.media.AudioClip;
 
+/**
+ * Simple music sequencer that plays sound with a certain rhythm.
+ */
 public class Sequencer {
 
     private boolean representation = true;
@@ -69,7 +72,7 @@ public class Sequencer {
 
     /**
      * Determine whether the expression of a beatMap is correct.
-     * @param beatMap Array, constitute 0 & 1.
+     * @param beatMap Array, constitute 0 and 1.
      */
     public void BeatMapRepresentJudge(int[] beatMap){
 
@@ -84,6 +87,7 @@ public class Sequencer {
 
     /**
      * Application, make a constant 8 beat.
+     * @param instrument sound file name. ex) bassdrum.wav
      */
     public void sequencerApp(String instrument){
 
