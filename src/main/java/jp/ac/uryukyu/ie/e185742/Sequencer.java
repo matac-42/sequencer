@@ -10,29 +10,33 @@ public class Sequencer {
     private boolean representation = true;
     private int[] intBeatMapArray = new int[8];
 
+    public boolean getRepresntation(){
+        boolean representation = this.representation;
+        return representation;
+    }
+
     /**
      * Play the sound road from the outside.
-     * @param setName sound file name. ex) bassdrum.wav
+     * @param instrument sound file name. ex) bassdrum.wav
      */
-    private void SoundOutput(String setName){
-        AudioClip bassDrum = new AudioClip(new File("SoundSet/"+setName).toURI().toString());
+    private void SoundOutput(String instrument){
+        AudioClip bassDrum = new AudioClip(new File("SoundSet/"+instrument).toURI().toString());
         bassDrum.play();
         try{
             Thread.sleep(500);
         }catch (InterruptedException e){
         }
-
     }
 
     /**
      * make a constant rhythm.
      * @param beatMap Array, constitute 0 & 1.
-     * @param setName sound file name. ex) bassdrum.wav
+     * @param instrument sound file name. ex) bassdrum.wav
      */
-    private void BeatMaker(int[] beatMap, String setName){
+    private void BeatMaker(int[] beatMap, String instrument){
         for(int mapElement : beatMap){
             if(mapElement == 1){
-                SoundOutput(setName);
+                SoundOutput(instrument);
             }else{
                 try{
                    Thread.sleep(500);
@@ -40,7 +44,6 @@ public class Sequencer {
                 }
             }
         }
-
     }
 
     /**
@@ -68,7 +71,7 @@ public class Sequencer {
      * Determine whether the expression of a beatMap is correct.
      * @param beatMap Array, constitute 0 & 1.
      */
-    private void BeatMapRepresentJudge(int[] beatMap){
+    public void BeatMapRepresentJudge(int[] beatMap){
 
         for(int mapElement : beatMap){
             if(mapElement == 0 || mapElement == 1){
@@ -82,18 +85,18 @@ public class Sequencer {
     /**
      * Application, make a constant 8 beat.
      */
-    public void sequencerApp(String setName){
+    public void sequencerApp(String instrument){
 
         BeatMap();
         BeatMapRepresentJudge(intBeatMapArray);
 
         if(representation){
             while(true){
-                BeatMaker(intBeatMapArray, setName);
+                BeatMaker(intBeatMapArray, instrument);
             }
         }else{
             System.out.println("正しい値をいれてください");
-            sequencerApp(setName);
+            sequencerApp(instrument);
         }
     }
 }
