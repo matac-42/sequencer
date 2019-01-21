@@ -7,11 +7,14 @@ import javafx.scene.media.AudioClip;
 
 public class Sequencer {
 
+    private boolean representation = true;
+    private int[] intBeatMapArray = new int[8];
+
     /**
      * Play the sound road from the outside.
      * @param setName sound file name. ex) bassdrum.wav
      */
-    public void SoundOutput(String setName){
+    private void SoundOutput(String setName){
         AudioClip bassDrum = new AudioClip(new File("SoundSet/"+setName).toURI().toString());
         bassDrum.play();
         try{
@@ -26,9 +29,9 @@ public class Sequencer {
      * @param beatMap Array, constitute 0 & 1.
      * @param setName sound file name. ex) bassdrum.wav
      */
-    public void BeatMaker(int[] beatMap, String setName){
-        for(int i = 0; i < beatMap.length; i++){
-            if(beatMap[i] == 1){
+    private void BeatMaker(int[] beatMap, String setName){
+        for(int mapElement : beatMap){
+            if(mapElement == 1){
                 SoundOutput(setName);
             }else{
                 try{
@@ -42,23 +45,55 @@ public class Sequencer {
 
     /**
      * make a beatmap by user input.
-     * @return Beat map int array constitute 0 & 1. The number of elements in the array is eight.
      */
-    public int[] BeatMap(){
+    private void BeatMap(){
 
         Scanner userInBeat = new Scanner(System.in);
 
-        System.out.println("0と1を合わせて8つ入力");
+        System.out.print("0と1を合わせて8つ入力>");
         String test = userInBeat.next() ;
         String[] StringBeatMapArray = test.split("");
+        try{
+            for(int i = 0; i < StringBeatMapArray.length; i++){
+                intBeatMapArray[i] = Integer.parseInt(StringBeatMapArray[i]);
+            }
 
-        int[] intBeatMapArray = new int[StringBeatMapArray.length];
-
-        for(int i = 0; i < StringBeatMapArray.length; i++){
-            intBeatMapArray[i] = Integer.parseInt(StringBeatMapArray[i]);
+        }catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("正しい長さで入力してください");
+            BeatMap();
         }
-
-        return intBeatMapArray;
     }
 
+    /**
+     * Determine whether the expression of a beatMap is correct.
+     * @param beatMap Array, constitute 0 & 1.
+     */
+    private void BeatMapRepresentJudge(int[] beatMap){
+
+        for(int mapElement : beatMap){
+            if(mapElement == 0 || mapElement == 1){
+                representation = true;
+            }else {
+                representation = false;
+            }
+        }
+    }
+
+    /**
+     * Application, make a constant 8 beat.
+     */
+    public void sequencerApp(String setName){
+
+        BeatMap();
+        BeatMapRepresentJudge(intBeatMapArray);
+
+        if(representation){
+            while(true){
+                BeatMaker(intBeatMapArray, setName);
+            }
+        }else{
+            System.out.println("正しい値をいれてください");
+            sequencerApp(setName);
+        }
+    }
 }
